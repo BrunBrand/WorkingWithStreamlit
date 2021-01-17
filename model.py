@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-import MetaTrader5 as mt
+#import MetaTrader5 as mt
 import pandas_datareader as pdr
 import yfinance as yf
 import math as math
