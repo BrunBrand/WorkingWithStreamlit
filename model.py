@@ -1,4 +1,4 @@
-# this code was made following the tutorial of Courses/Finalcial-Python
+# %% this code was made following the tutorial of Courses/Finalcial-Python
 
 import streamlit as st
 import pandas as pd
@@ -21,18 +21,24 @@ st.write("""
 
 """)
 
+# %% --------------------- Definindo os inputs de tempo e de stock  ---------------------
 period_values_array = ["1d", "5d", "1mo", "3mo", 
                 "6mo", "1y", "2y", "5y",
                 "10y", "ytd", "max"]
 
 symbol = st.sidebar.text_input("Search your stock symbol")
-period_value = st.sidebar.radio(options=period_values_array, label = "Period of stock symbol")
+#period_value = st.sidebar.radio(options=period_values_array, label = "Period of stock symbol")
+start_date = st.sidebar.text_input("Write the START date: year-month-day")
+end_date = st.sidebar.text_input("Write the END date: year-month-day")
+
+#                    --------------------- ---------------------
 
 
+# %% --------------------- Função ativada quando o stock symbol existir  ---------------------
 def model_activate():
     now = date.today()
     start_date = "2019-05-01"
-    stock = yf.download(symbol, period = period_value, interval="1d")
+    stock = yf.download(symbol, start=start_date, end=end_date, interval="1d")
     ticker = yf.Tickers(symbol)
     if stock.empty:
         st.write("""
@@ -44,19 +50,11 @@ def model_activate():
         ## Name of The Company is: """ + eval(concat_object))
 
     frequency = math.floor(len(stock['Adj Close'])/2)
-   
+ 
 
-
-
-
-    pd.Index(sm.tsa.datetools.dates_from_range(f'2019Q1', f'2021Q3'))
-
-
-
+    #pd.Index(sm.tsa.datetools.dates_from_range(f'2019Q1', f'2021Q3'))
     #if not mt.initialize():
     #    mt.initialize() 
-
-
     #df = sm.datasets.macrodata.load_pandas().data
 
     #st.write(df)
@@ -132,6 +130,12 @@ def model_activate():
     """)
 
 
-    
-if symbol != "":
+# %%     
+if symbol != "" and start_date != "" and end_date != "":
     model_activate()
+else:
+    st.write("""
+        ## Fix your input!
+    """)
+
+    
